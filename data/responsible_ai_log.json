@@ -1,0 +1,42 @@
+[
+  {
+    "case_id": "CASE-01",
+    "ai_diagnosis": "ACL blocking VLAN 30 traffic on Router-1",
+    "human_correction": "VLAN 30 is missing from trunk allowed list on Switch-A Gi0/1 AND denied by ACL VLAN30_FILTER on Router-1",
+    "reason": "The AI correctly identified the ACL filter but missed that Switch-A trunk allowed list Gi0/1 only permitted VLANs 10 and 20, which physically prevents frames from reaching the router subinterface.",
+    "decision": "Edited",
+    "timestamp": "2026-08-10T14:22:00Z"
+  },
+  {
+    "case_id": "CASE-05",
+    "ai_diagnosis": "DHCP configuration issue on Edge Router-1",
+    "human_correction": "NAT access-list 100 configured with wrong subnet 192.168.2.0/16 instead of LAN subnet 192.168.1.0/24",
+    "reason": "The AI misclassified the symptom as DHCP related. The host already has IP 192.168.1.50 and evidence shows NAT ACL 100 misconfiguration and missing 'ip nat inside' on Gi0/0/0.",
+    "decision": "Rejected",
+    "timestamp": "2026-08-11T09:15:30Z"
+  },
+  {
+    "case_id": "CASE-11",
+    "ai_diagnosis": "DHCP server service disabled on Router-2",
+    "human_correction": "Missing 'ip helper-address 10.20.20.5' command on Router-1 subinterface Gig0/0.10",
+    "reason": "Router-2 DHCP server is running properly, but Router-1 (the default gateway for PC-A's subnet) is missing the IP helper address needed to relay cross-subnet UDP DHCP broadcasts.",
+    "decision": "Edited",
+    "timestamp": "2026-08-11T11:40:12Z"
+  },
+  {
+    "case_id": "CASE-14",
+    "ai_diagnosis": "Physical cable disconnection on PC-5 Ethernet port",
+    "human_correction": "Subnet mask mismatch between PC-5 (255.255.255.0) and Router SVI (255.255.255.192 /26)",
+    "reason": "The link status shows UP/UP. The actual fault is a subnet mask mismatch causing PC-5 to calculate an incorrect local broadcast domain boundary.",
+    "decision": "Rejected",
+    "timestamp": "2026-08-12T08:05:00Z"
+  },
+  {
+    "case_id": "CASE-20",
+    "ai_diagnosis": "Incorrect static route on Router-1 for external web server",
+    "human_correction": "Missing 'ip nat inside' on Gi0/0/0 and 'ip nat outside' on Gi0/0/1 interfaces",
+    "reason": "Static NAT translation rule 'ip nat inside source static 192.168.1.100 203.0.113.10' was present in running-config, but neither interface was assigned NAT direction roles.",
+    "decision": "Edited",
+    "timestamp": "2026-08-12T16:30:45Z"
+  }
+]
